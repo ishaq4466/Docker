@@ -1,0 +1,6 @@
+Docker stack-deployment
+
+Using docker docker-compose. I start up a whole load of services all in the right order in 1 command. So I have a yaml file. That's the difference. Took me a while to work out what's what.
+
+
+https://github.com/docker-library/redis/issues/111
