@@ -1,20 +1,22 @@
->1.Docker with "volumes or bind mounts or tmpfs" 
->help to persit data on the host machine even if
->we delete the container's
+# Docker with Volumes
 
->2.When you use a bind mount, a file or directory 
->on the host machine is mounted into a container. The file or 
->directory is referenced by its full or relative path on the 
->host machine. By contrast, when you use a volume, a new directory 
->is created within Docker’s storage directory on the host machine, and 
->Docker manages that directory’s contents.
+1.Docker with "volumes or bind mounts or tmpfs" 
+help to persit data on the host machine even if
+we delete the container's
 
->3.Bind mounts are very performant, but they rely on the host 
->machine’s filesystem having a specific directory structure available. 
->If you are developing new Docker applications, consider using named 
->volumes instead
+2.When you use a bind mount, a file or directory 
+on the host machine is mounted into a container. The file or 
+directory is referenced by its full or relative path on the 
+host machine. By contrast, when you use a volume, a new directory 
+is created within Docker’s storage directory on the host machine, and 
+Docker manages that directory’s contents.
 
->4. Getting Hands dirty with Volume 
+3.Bind mounts are very performant, but they rely on the host 
+machine’s filesystem having a specific directory structure available. 
+If you are developing new Docker applications, consider using named 
+volumes instead
+
+4. Getting Hands dirty with Volume 
 
 >$docker pull redis
 
@@ -22,26 +24,26 @@
 >$docker run -d -p 6379:6379 -v /docker/data/redis:/data --name redis1 redis:latest
 
 	
->This will run a container named "redis1" in backgroud, forwarding the container port 6379 to host port 6379, also it will create a volume in /docker/data(source) nd /data(target) inside container. 
+This will run a container named "redis1" in backgroud, forwarding the container port 6379 to host port 6379, also it will create a volume in /docker/data(source) nd /data(target) inside container. 
 
 
 source:The source of the mount. For named volumes, this is the name of the volume. For anonymous volumes, this field is omitted. May be specified as source or src.
 (/docker/data/redis-data --> uses absolute path )
 destination:The destination takes as its value the path where the file or directory is mounted in the container
 
-docker exec -it redis1 /bin/bash
+>docker exec -it redis1 /bin/bash
 
-+++++++++++++++++++++++
-Redis cmd:
-redis-cli
-keys * 
-set key1 value1
-set key2 value2
-keys *
-exit
+>+++++++++++++++++++++++
+>Redis cmd:
+>redis-cli
+>keys * 
+>set key1 value1
+>set key2 value2
+>keys *
+>exit
 
-exit
-+++++++++++++++++++++++
+>exit
+>+++++++++++++++++++++++
 
 cd /docker/data/dump.rdb 
 (your redis DB dump)
