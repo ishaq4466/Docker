@@ -17,12 +17,11 @@ If you are developing new Docker applications, consider using named
 volumes instead
 
 4.Getting Hands dirty with Volume 
+```
+docker pull redis
 
->docker pull redis
-
-
->docker run -d -p 6379:6379 -v /docker/data/redis:/data --name redis1 redis:latest
-
+docker run -d -p 6379:6379 -v /docker/data/redis:/data --name redis1 redis:latest
+```
 	
 This will run a container named "redis1" in backgroud, forwarding the container port 6379 to host port 6379, also it will create a volume in /docker/data(source) nd /data(target) inside container. 
 
@@ -78,15 +77,15 @@ and see changes
 
 
 7.Also the same directory can be backed up on another container
-
->docker run  -v /docker/redis-data:/backup ubuntu ls /backup
-
+```
+docker run  -v /docker/redis-data:/backup ubuntu ls /backup
+```
 8.Use of --volumes-from option
 
 Mapping our Redis container's volume to an another(Ubuntu) container. The /data directory only exists within our Redis container, however, because of -volumes-from our Ubuntu container can access the data.
-
->docker run --volumes-from r1 -it ubuntu ls /data
-
+```
+docker run --volumes-from r1 -it ubuntu ls /data
+```
 
 
 9.Above implementation by first creating a volume and then running  the container 
@@ -101,5 +100,6 @@ Again ssh to redis conatiner and do the same as done above
 When you "cd" to mount point you will "/var/lib/docker/volume/my-vol/_data/dump.rdb"
 
 Finally for removing volumes
-
->docker volume rm my-vol
+```
+docker volume rm my-vol
+```
