@@ -16,12 +16,12 @@ machine’s filesystem having a specific directory structure available.
 If you are developing new Docker applications, consider using named 
 volumes instead
 
-4. Getting Hands dirty with Volume 
+4.Getting Hands dirty with Volume 
 
->$docker pull redis
+>docker pull redis
 
 
->$docker run -d -p 6379:6379 -v /docker/data/redis:/data --name redis1 redis:latest
+>docker run -d -p 6379:6379 -v /docker/data/redis:/data --name redis1 redis:latest
 
 	
 This will run a container named "redis1" in backgroud, forwarding the container port 6379 to host port 6379, also it will create a volume in /docker/data(source) nd /data(target) inside container. 
@@ -30,64 +30,76 @@ This will run a container named "redis1" in backgroud, forwarding the container 
 source:The source of the mount. For named volumes, this is the name of the volume. For anonymous volumes, this field is omitted. May be specified as source or src.
 (/docker/data/redis-data --> uses absolute path )
 destination:The destination takes as its value the path where the file or directory is mounted in the container
+```
+docker exec -it redis1 /bin/bash
 
->docker exec -it redis1 /bin/bash
++++++++++++++++++++++++
 
->+++++++++++++++++++++++
->Redis cmd:
->redis-cli
->keys * 
->set key1 value1
->set key2 value2
->keys *
->exit
+Redis cmd:
 
->exit
->+++++++++++++++++++++++
+redis-cli
+
+keys * 
+
+set key1 value1
+
+set key2 value2
+
+keys *
+
+exit
+
+exit
+
++++++++++++++++++++++++
 
 cd /docker/data/dump.rdb 
 (your redis DB dump)
-
-
-5.
+```
+5.Stopping the redis container and removing the image(optionally) 
+```
 docker ps -a (Stopped and runing containers)
-
 docker stop redis1 
 docker remove -rf redis1
-
-
 docker image ls
-
 docker image rm alpine(base-image)
 docker image rm redis(child-image)
 (Only untagged image will be there)
-
-
+```
+6.Running the same redis container with the same volume source
+```
 docker pull redis
-docker run -d -p 6379:6379 -v /docker/data/redis:/data --name redis1 redis:latest
 
+docker run -d -p 6379:6379 -v /docker/data/redis:/data --name redis1 redis:latest
+```
 Again run the redis-cli after ssh into redis container
-add some few keys-values and remove the container reploy it
+add some few  more keys-values and remove the container deploy it
 and see changes
 
 
-7.Same directory can be backed up on another container
-docker run  -v /docker/redis-data:/backup ubuntu ls /backup
+7.Also the same directory can be backed up on another container
 
-8.Mapping our Redis container's volume to an another(Ubuntu) container. The /data directory only exists within our Redis container, however, because of -volumes-from our Ubuntu container can access the data.
+>docker run  -v /docker/redis-data:/backup ubuntu ls /backup
 
-docker run --volumes-from r1 -it ubuntu ls /data
+8.Use of --volumes-from option
+
+Mapping our Redis container's volume to an another(Ubuntu) container. The /data directory only exists within our Redis container, however, because of -volumes-from our Ubuntu container can access the data.
+
+>docker run --volumes-from r1 -it ubuntu ls /data
 
 
 
-9.Creating a volume 
+9.Above implementation by first creating a volume and then running  the container 
 
+```
 docker run -d -p 6379:6379 -v my-vol:/data --name redis1 redis:latest
 docker inspect volume my-vol
+```
+Again ssh to redis conatiner and do the same as done above
 
-Again ssh to redis conatiner and doing as done above
+10.Check the data persistency and remove the container
+When you "cd" to mount point you will "/var/lib/docker/volume/my-vol/_data/dump.rdb"
 
-10. when you "cd" to mount point you will /var/lib/docker/volume/my-vol/_data/dump.rdb
+Finally for removing volumes
 
-To remove volumes
-docker volume rm myvol2
+>docker volume rm my-vol
