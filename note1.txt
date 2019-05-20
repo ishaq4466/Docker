@@ -1,0 +1,74 @@
+16-MAY-2019
+
+
+Hypervisor-based virtual machines-->compute,memory capacity is fixed 
+cannot run more workloads on same machines as compared to docker 
+
+1.containers are loosely held isolated environments, 
+light weight because they dont need the extra load of hypervisor
+they are portable--independent of machine
+can run more no of workload on same hardware bcoz of light weight 
+
+
+2.containers runs directly on the host machine's kernel instead of running on
+HOST machine hardware as in VMs
+
+3.Docker containers can run on host machine even if the host machine is a VM
+
+4.Docker engine:client-server model 
+
+docker-client("docker" CLI)<--->REST API<--->server[daemon is  a long running process]("dockerd" cmd)
+
+
+5. Dockerfile is used to define docker image 
+
+
+
+
+5. DOCKER ARCHITECTURE:
+
+docker daemon 
+docker client
+docker registeries
+docker objects: images, container, services
+
+
+docker daemon(dockerd): Listens API and manages docker o 
+
+
+docker-machine ip
+
+
+docker ps -a
+
+docker run -p 4000:80 -d hello-node:1.0
+
+mapping pod 4000 of local host with port 80 of container 
+
+-d: run in background
+
+
+"registery collection of repository, 
+repository is collection of built images"
+
+dockerhub.io is a registory
+username/repo:tag
+
+
+
+SERVICES:
+*In distributed application, different pieces of app are called as services 
+*Services are nothing but "containers in production"
+*For creating the services in docker we create "docker-compose.yaml"
+
+
+
+
+before deploying the stack you have to init a swarm
+
+docker swarm init 
+docker stack deploy -c docker-compose.yml getstartedlab<stack name>
+docker services ls
+docker stack services <service-name>
+
+
