@@ -116,7 +116,7 @@ just to provide capacity.
 * The node which run **docker swarm init** becomes manager and workers are joined using the command **docker join --token**
 * Swarm participates an ingress routing mesh so that all containers port
 point at same port 
-
+```
 docker-machine create --driver virtualbox myvm1
 docker-machine ls
 
@@ -126,7 +126,7 @@ docker node ls
 docker stack deploy -c docker-compose.yaml stack1
 docker stack ls
 docker swarm leave --force
-
+```
 
 
 ## DOCKER STACK
