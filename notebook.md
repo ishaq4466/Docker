@@ -34,7 +34,7 @@ docker objects: images, container, services
 
 docker daemon(dockerd): Listens API and manages docker image creation
 
-
+```
 docker-machine ip
 
 docker ps -a
@@ -56,17 +56,24 @@ docker ps -q (Running containers id)
 docker rm -f $(docker ps -a -q)
 
 
+docker inspect $INSTANCE_ID # return a low level description of docker object
+```
 
+Getting the instance IP addr 
+```
+$docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $INSTANCE_ID
+```
 
+List all the binding ports
+```
+$ docker inspect --format='{{range $p, $conf := .NetworkSettings.Ports}} {{$p}} -> {{(index $conf 0).HostPort}} {{end}}' $INSTANCE_ID
 
-
-
-"registery collection of repository, 
-repository is collection of built images"
+```
+"registery collection of repository,repository is collection of built images"
 
 dockerhub.io is a registory
+gcr.io
 username/repo:tag
-
 
 
 ## SERVICES:
@@ -127,13 +134,13 @@ docker swarm leave --force
 * In production environment we use single stack which can be orchested and scaled together 
 
 
-			  Service1-----		
+			  service1-----		
 			 /			  |
 			/			  |
 stack ---service2---------|----->SINGLE STACK ENTIRE APPLICATION 	
 	   		\			  |	
 	   		 \			  |
-	   		  Service3----|
+	   		  service3----|
 
 service1:a hello-flask container om port **80**i.e http(displaying container id)
 
@@ -148,6 +155,8 @@ service3:redis db keeping the count for the number of visitor and storing on
 * Functionality of entire application can be defined into a single stack
 
 ```
+docker swarm init
+
 docker stack deploy -c docker-compose.yaml stack_name
 docker stack ls
 docker stack logs <stack_name>
