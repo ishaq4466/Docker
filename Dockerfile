@@ -20,7 +20,7 @@ RUN /usr/local/bin/install-plugins.sh simple-theme-plugin
 RUN /usr/local/bin/install-plugins.sh kubernetes
 RUN /usr/local/bin/install-plugins.sh groovy
 
-ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
+#ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
 ENV JENKINS_USERNAME="admin"
 ENV JENKINS_PASSWORD="admin"
 #JENKINS_HOME=""
