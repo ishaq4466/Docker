@@ -1,0 +1,5 @@
+FROM smartbuddy/lazybox:latest
+RUN apk add --update --no-cache bind-tools
+
+
+
